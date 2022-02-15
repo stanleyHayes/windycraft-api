@@ -17,8 +17,8 @@ const invitationSchema = new Schema({
         type: String,
         required: true,
         lowercase: true,
-        validate(value){
-            if(!validator.isEmail(value)){
+        validate(value) {
+            if (!validator.isEmail(value)) {
                 throw new Error(`Invalid email: ${value}`);
             }
         }
@@ -28,6 +28,10 @@ const invitationSchema = new Schema({
         enum: ['expired', 'pending', 'accepted'],
         default: 'pending'
     },
+    expiryDate: {
+        type: Date,
+        required: true
+    }
 }, {timestamps: {createdAt: true, updatedAt: true}});
 
 const Invitation = mongoose.model('Invitation', invitationSchema);
