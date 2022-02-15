@@ -37,6 +37,13 @@ const messageSchema = new Schema({
     message: {
         type: String,
         required: true
+    },
+    responded: {
+        type: Boolean,
+        default: false
+    },
+    response: {
+        type: String
     }
 }, {timestamps: {createdAt: true, updatedAt: true}});
 

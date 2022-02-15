@@ -51,9 +51,12 @@ const quoteSchema = new Schema({
         type: Date,
         required: true
     },
-    message: {
-        type: Date,
-        required: true
+    responded: {
+        type: Boolean,
+        default: false
+    },
+    response: {
+        type: String
     }
 }, {timestamps: {createdAt: true, updatedAt: true}});
 

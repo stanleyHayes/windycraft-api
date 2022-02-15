@@ -139,6 +139,10 @@ const adminSchema = new Schema({
             remove: {
                 type: Boolean,
                 default: false
+            },
+            reply: {
+                type: Boolean,
+                default: false
             }
         },
         quotes: {
@@ -157,6 +161,10 @@ const adminSchema = new Schema({
             remove: {
                 type: Boolean,
                 default: false
+            },
+            reply: {
+                type: Boolean,
+                default: true
             }
         },
         sales: {
@@ -227,6 +235,14 @@ const adminSchema = new Schema({
                 default: false
             },
             remove: {
+                type: Boolean,
+                default: false
+            },
+            approve: {
+                type: Boolean,
+                default: false
+            },
+            refuse: {
                 type: Boolean,
                 default: false
             }
