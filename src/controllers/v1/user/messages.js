@@ -8,7 +8,7 @@ exports.createMessage = async (req, res) => {
             return res.status(400).json({message: 'Missing required fields'});
         if(!validator.isEmail(email)) return res.status(400).json({message: `Invalid email: ${email}`});
         if(!validator.isMobilePhone(phone)) return res.status(400).json({message: `Invalid email: ${phone}`});
-        await Message.create({firstName, lastName, email, phone, subject, text});
+        await Message.create({firstName, lastName, email, phone, subject, message: text});
         // send text message to both sender and recipient
         // send email to both sender and recipient
         res.status(201).json({message: 'Message sent successfully. We would respond very soon.'});

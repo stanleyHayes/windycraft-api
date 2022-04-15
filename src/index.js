@@ -14,6 +14,7 @@ const adminV1InvitationRoutes = require("./routes/v1/admin/invitations");
 const adminV1MessageRoutes = require("./routes/v1/admin/messages");
 const adminV1QuoteRoutes = require("./routes/v1/admin/quotes");
 const adminV1ServiceRoutes = require("./routes/v1/admin/services");
+const adminV1ValueRoutes = require("./routes/v1/admin/values");
 const adminV1TestimonialRoutes = require("./routes/v1/admin/testimonials");
 const adminV1TeamMemberRoutes = require("./routes/v1/admin/team-members");
 
@@ -27,6 +28,9 @@ const userV1TeamMemberRoutes = require("./routes/v1/user/team-members");
 const userV1TestimonialRoutes = require("./routes/v1/user/testimonials");
 
 const app = express();
+const server = app.listen();
+server.setTimeout(500000);
+
 dotenv.config();
 mongoose.connect(mongoURI)
     .then(value => {
@@ -58,6 +62,7 @@ app.use('/api/v1/admin/invitations', adminV1InvitationRoutes);
 app.use('/api/v1/admin/messages', adminV1MessageRoutes);
 app.use('/api/v1/admin/quotes', adminV1QuoteRoutes);
 app.use('/api/v1/admin/services', adminV1ServiceRoutes);
+app.use('/api/v1/admin/values', adminV1ValueRoutes);
 app.use('/api/v1/admin/testimonials', adminV1TestimonialRoutes);
 app.use('/api/v1/admin/team-members', adminV1TeamMemberRoutes);
 

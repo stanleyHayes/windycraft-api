@@ -11,6 +11,7 @@ exports.createInvitation = async (req, res) => {
         if (existingInvitation) return res.status(400).json({message: 'Invitation already exists'});
         const expiryDate = moment().add(30, 'days');
         const invitation = await Invitation.create({email, inviter: req.admin._id, expiryDate});
+
         res.status(201).json({message: 'Invitation created successfully', data: invitation});
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -27,7 +28,7 @@ exports.getInvitations = async (req, res) => {
         const skip = (page - 1) * limit;
         const match = {};
         const invitations = await Invitation.find(match).skip(skip).limit(limit).sort({createdAt: -1});
-        const totalInvitations = Invitation.find(match).countDocuments();
+        const totalInvitations = await Invitation.find(match).countDocuments();
 
         res.status(200).json({
             message: `${totalInvitations} invitations retrieved successfully`,

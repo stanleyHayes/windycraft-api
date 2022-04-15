@@ -1,5 +1,5 @@
 const Quote = require("./../../../models/v1/quote");
-const validator = require("validator/es");
+const validator = require("validator");
 const moment = require("moment");
 
 exports.createQuote = async (req, res) => {

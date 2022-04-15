@@ -31,6 +31,10 @@ const invitationSchema = new Schema({
     expiryDate: {
         type: Date,
         required: true
+    },
+    code: {
+        type: String,
+        required: true
     }
 }, {timestamps: {createdAt: true, updatedAt: true}});
 

@@ -9,6 +9,12 @@ const adminSchema = new Schema({
         required: true,
         trim: true
     },
+    username: {
+        type: String,
+        required: true,
+        trim: true,
+        unique: true
+    },
     email: {
         type: String,
         required: true,
@@ -20,8 +26,16 @@ const adminSchema = new Schema({
             }
         }
     },
-    image: {
-        type: String
+    phone: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+        validate(value) {
+            if (!validator.isMobilePhone(value)) {
+                throw new Error(`Invalid phone ${value}`);
+            }
+        }
     },
     password: {
         type: String,
@@ -36,9 +50,9 @@ const adminSchema = new Schema({
     authInfo: {
         otp: {
             type: String,
-            minlength: 6
+            minlength: 4
         },
-        validUntil: {
+        otpValidUntil: {
             type: Date
         },
         token: {
@@ -48,203 +62,203 @@ const adminSchema = new Schema({
     status: {
         type: String,
         enum: ['active', 'suspended', 'pending'],
-        status: 'pending'
+        default: 'pending'
     },
     permissions: {
         faqs: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
         invitations: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
         clients: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
         admins: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
         messages: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
-            },
-            reply: {
-                type: Boolean,
-                default: false
-            }
-        },
-        quotes: {
-            read: {
-                type: Boolean,
-                default: false
-            },
-            create: {
-                type: Boolean,
-                default: false
-            },
-            update: {
-                type: Boolean,
-                default: false
-            },
-            remove: {
-                type: Boolean,
-                default: false
+                default: true
             },
             reply: {
                 type: Boolean,
                 default: true
             }
         },
-        sales: {
+        quotes: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
+            },
+            reply: {
+                type: Boolean,
+                default: true
+            }
+        },
+        values: {
+            read: {
+                type: Boolean,
+                default: true
+            },
+            create: {
+                type: Boolean,
+                default: true
+            },
+            update: {
+                type: Boolean,
+                default: true
+            },
+            remove: {
+                type: Boolean,
+                default: true
             }
         },
         services: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
         teams: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
         testimonials: {
             read: {
                 type: Boolean,
-                default: false
+                default: true
             },
             create: {
                 type: Boolean,
-                default: false
+                default: true
             },
             update: {
                 type: Boolean,
-                default: false
+                default: true
             },
             remove: {
                 type: Boolean,
-                default: false
+                default: true
             },
             approve: {
                 type: Boolean,
-                default: false
+                default: true
             },
             refuse: {
                 type: Boolean,
-                default: false
+                default: true
             }
         }
     }

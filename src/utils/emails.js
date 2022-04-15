@@ -15,7 +15,7 @@ const sendEmail = async (email, subject, text) => {
         };
         await sgMail.send(msg);
     } catch (e) {
-        console.log(e.message)
+        console.log(e.message, 'send email forbidden')
     }
 }
 

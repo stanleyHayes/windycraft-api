@@ -4,8 +4,8 @@ exports.createService = async (req, res) => {
     try {
         const {create} = req.admin.permissions.services;
         if (!create) return res.status(401).json({message: 'You do not have the permission to perform this operation'});
-        const {image, title, description} = req.body;
-        const service = await Service.create({image, title, description});
+        const {title} = req.body;
+        const service = await Service.create({title});
         res.status(201).json({message: 'Service created successfully', data: service});
     } catch (e) {
         res.status(500).json({message: e.message});

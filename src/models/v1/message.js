@@ -44,6 +44,11 @@ const messageSchema = new Schema({
     },
     response: {
         type: String
+    },
+    status: {
+        type: String,
+        enum: ['responded', 'pending', 'read'],
+        default: 'pending'
     }
 }, {timestamps: {createdAt: true, updatedAt: true}});
 

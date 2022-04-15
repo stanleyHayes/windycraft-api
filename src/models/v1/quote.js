@@ -25,8 +25,8 @@ const quoteSchema = new Schema({
         type: String,
         required: true,
         validate(value){
-            if(!validator.isEmail(value)){
-                throw new Error(`Invalid email: ${value}`);
+            if(!validator.isMobilePhone(value)){
+                throw new Error(`Invalid phone: ${value}`);
             }
         }
     },
@@ -57,6 +57,11 @@ const quoteSchema = new Schema({
     },
     response: {
         type: String
+    },
+    status: {
+        type: String,
+        enum: ['responded', 'pending', 'read'],
+        default: 'pending'
     }
 }, {timestamps: {createdAt: true, updatedAt: true}});
 

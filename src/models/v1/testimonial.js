@@ -25,6 +25,11 @@ const testimonialSchema = new Schema({
     approved: {
         type: Boolean,
         default: false
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'approved', 'blocked'],
+        default: 'pending'
     }
 }, {timestamps: {createdAt: true, updatedAt: true}});
 

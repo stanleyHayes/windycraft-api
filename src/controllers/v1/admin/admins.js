@@ -23,7 +23,7 @@ exports.createAdmin = async (req, res) => {
 
 exports.getAdmins = async (req, res) => {
     try {
-        const {read} = req.admin.permissions.admin;
+        const {read} = req.admin.permissions.admins;
         if (!read) return res.status(401).json({message: 'You do not have permission to perform this operation'});
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 50;
@@ -34,7 +34,7 @@ exports.getAdmins = async (req, res) => {
             .limit(limit)
             .skip(skip)
             .sort({createdAt: -1});
-        res.status(200).json({data: admins, adminCount: totalAdmins, message: 'Admin Retrieved Successfully'});
+        res.status(200).json({data: admins, count: totalAdmins, message: 'Admin Retrieved Successfully'});
     } catch (e) {
         res.status(500).json({message: e.message});
     }
