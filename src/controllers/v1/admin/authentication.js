@@ -137,29 +137,50 @@ exports.verifyAccount = async (req, res) => {
 exports.updateProfile = async (req, res) => {
     try {
         const updates = Object.keys(req.body);
-        const allowedUpdates = ['name', 'email', 'phone'];
+        console.log(req.admin, req.body)
+        const allowedUpdates = ['name', 'email', 'phone', 'emergencyPhoneNumber', 'username'];
         const isAllowed = updates.every(update => allowedUpdates.includes(update));
         if (!isAllowed)
-            return res.status(400).json({message: 'Updates not allowed', data: null});
+            return res.status(400).json({message: 'Updates not allowed'});
         for (let key of updates) {
             if (key === 'email') {
-                const user = await Admin.findOne({email: req.body['email']});
-                if (!user)
-                    req.user['email'] = req.body['email'];
-                else
-                    return res.status(409).json({data: null, message: `Email already taken`});
+                if (req.admin.email !== req.body['email']) {
+                    const user = await Admin.findOne({email: req.body['email']});
+                    if (!user) {
+                        req.admin['email'] = req.body['email'];
+                    } else
+                        return res.status(409).json({message: `Email already taken`});
+                } else {
+                    continue;
+                }
+
             } else if (key === 'phone') {
-                const user = await Admin.findOne({phone: req.body['phone']});
-                if (!user)
-                    req.user['phone'] = req.body['phone'];
-                else
-                    return res.status(409).json({data: null, message: `Phone number already taken`});
-            } else {
-                req.user[key] = req.body[key];
+                if (req.admin.phone !== req.body['phone']) {
+                    const user = await Admin.findOne({phone: req.body['phone']});
+                    if (!user)
+                        req.admin['phone'] = req.body['phone'];
+                    else
+                        return res.status(409).json({message: `Phone number already taken`});
+                } else {
+                    continue;
+                }
+
+            } else if (key === 'username') {
+                if (req.admin.username !== req.body['username']) {
+                    const user = await Admin.findOne({username: req.body['username']});
+                    if (!user)
+                        req.admin['username'] = req.body['username'];
+                    else
+                        return res.status(409).json({message: `Username already taken`});
+                } else {
+                    continue;
+                }
+
             }
+            req.admin[key] = req.body[key];
         }
-        await req.user.save();
-        res.status(200).json({data: req.user, message: 'Account Successfully Updated'});
+        await req.admin.save();
+        res.status(200).json({data: req.admin, message: 'Account Successfully Updated'});
     } catch (e) {
         res.status(500).json({message: e.message});
     }

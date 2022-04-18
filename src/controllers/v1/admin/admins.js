@@ -1,16 +1,20 @@
 const Admin = require("../../../models/v1/admin");
+const bcrypt = require("bcryptjs");
+
 exports.createAdmin = async (req, res) => {
     try {
-        const {create} = req.admin.permissions.admin;
+        const {create} = req.admin.permissions.admins;
         if (!create) return res.status(401).json({message: 'You do not have permission to perform this operation'});
-        const {name, phoneNumber, password, email} = req.body;
+        const {name, phone, password, email, emergencyPhoneNumber, image} = req.body;
         const existingAdmin = await Admin.findOne({email});
         if(existingAdmin)return res.status(409).json({message: 'Email already taken'});
 
         const admin = await Admin.create({
+            image,
             email,
             name,
-            phoneNumber,
+            phone,
+            emergencyPhoneNumber,
             password: await bcrypt.hash(password, 10)
         });
 
@@ -43,7 +47,7 @@ exports.getAdmins = async (req, res) => {
 
 exports.getAdmin = async (req, res) => {
     try {
-        const {read} = req.admin.permissions.admin;
+        const {read} = req.admin.permissions.admins;
         if (!read) return res.status(401).json({message: 'You do not have permission to perform this operation'});
         const admin = await Admin.findById(req.params.id);
         if (!admin) return res.status(404).json({message: 'Admin not found'});
@@ -63,19 +67,20 @@ exports.updateAdmin = async (req, res) => {
         const updates = Object.keys(req.body);
         const allowedUpdates = [
             'name',
-            'phoneNumber',
+            'phone',
             'image',
             'permissions',
+            'emergencyPhoneNumber'
         ];
         const isAllowed = updates.every(update => allowedUpdates.includes(update));
         if(!isAllowed) return res.status(400).json({message: 'Updates not allowed'});
         for (let key of updates){
-            if(key === 'phoneNumber'){
-                if(admin.phoneNumber !== req.body['phoneNumber']){
-                    const existingAdmin = await Admin.findOne({phoneNumber: req.body['phoneNumber']});
+            if(key === 'phone'){
+                if(admin.phone !== req.body['phone']){
+                    const existingAdmin = await Admin.findOne({phoneNumber: req.body['phone']});
                     if(existingAdmin) return res.status(409).json({message: 'Phone number already taken'});
                 }else{
-                    admin.phoneNumber = req.body['phoneNumber'];
+                    admin.phone = req.body['phone'];
                 }
             }
             admin[key] = req.body[key];
@@ -90,7 +95,7 @@ exports.updateAdmin = async (req, res) => {
 
 exports.deleteAdmin = async (req, res) => {
     try {
-        const {delete: remove} = req.admin.permissions.admin;
+        const {delete: remove} = req.admin.permissions.admins;
         if (!remove) return res.status(401).json({message: 'You do not have permission to perform this operation'});
         const admin = await Admin.findById(req.params.id);
         if (!admin) return res.status(404).json({message: 'Admin not found'});

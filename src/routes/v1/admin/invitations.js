@@ -17,9 +17,9 @@ router.route("/")
     .post(authenticate, createInvitation)
     .get(authenticate, getInvitations);
 
-router.get('/:id/accept', acceptInvitation);
-router.get('/:id/revoke', authenticate, revokeInvitation);
-router.get('/:id/reject', rejectInvitation);
+router.put('/:id/accept', acceptInvitation);
+router.put('/:id/revoke', authenticate, revokeInvitation);
+router.put('/:id/reject', rejectInvitation);
 
 router.route('/:id')
     .get(authenticate, getInvitation)

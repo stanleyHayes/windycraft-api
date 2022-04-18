@@ -16,7 +16,7 @@ const router = express.Router({mergeParams: true});
 
 router.post('/register', register);
 router.post('/login', login);
-router.post('/change-password', changePassword);
+router.post('/change-password', authenticate, changePassword);
 router.post('/forgot-password', forgotPassword);
 router.get('/profile', authenticate, getProfile);
 router.post('/reset-password', authenticate, resetPassword);

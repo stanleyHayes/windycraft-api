@@ -9,6 +9,10 @@ const adminSchema = new Schema({
         required: true,
         trim: true
     },
+    image: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true,
@@ -29,6 +33,15 @@ const adminSchema = new Schema({
     phone: {
         type: String,
         required: true,
+        trim: true,
+        validate(value) {
+            if (!validator.isMobilePhone(value)) {
+                throw new Error(`Invalid phone ${value}`);
+            }
+        }
+    },
+    emergencyPhoneNumber: {
+        type: String,
         trim: true,
         lowercase: true,
         validate(value) {
@@ -68,201 +81,227 @@ const adminSchema = new Schema({
         faqs: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         invitations: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         clients: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         admins: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         messages: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             },
             reply: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         quotes: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             },
             reply: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         values: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         services: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         teams: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             }
         },
         testimonials: {
             read: {
                 type: Boolean,
-                default: true
+                default: false
             },
             create: {
                 type: Boolean,
-                default: true
+                default: false
             },
             update: {
                 type: Boolean,
-                default: true
+                default: false
             },
             remove: {
                 type: Boolean,
-                default: true
+                default: false
             },
             approve: {
                 type: Boolean,
-                default: true
+                default: false
             },
             refuse: {
                 type: Boolean,
-                default: true
+                default: false
+            }
+        },
+        permissions: {
+            read: {
+                type: Boolean,
+                default: false
+            },
+            create: {
+                type: Boolean,
+                default: false
+            },
+            update: {
+                type: Boolean,
+                default: false
+            },
+            remove: {
+                type: Boolean,
+                default: false
+            },
+            approve: {
+                type: Boolean,
+                default: false
+            },
+            refuse: {
+                type: Boolean,
+                default: false
             }
         }
     }
-}, {timestamps: {createdAt: true, updatedAt: true}});
+}, {timestamps: {createdAt: false, updatedAt: false}});
 
 const Admin = mongoose.model("Admin", adminSchema);
 
