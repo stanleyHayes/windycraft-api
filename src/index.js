@@ -40,6 +40,8 @@ mongoose.connect(mongoURI)
     console.log(`Error connecting to Mongo DB: ${error.message}`);
 });
 
+console.log(mongoURI, 'mongo uri')
+
 app.use(userAgent.express());
 app.use(express.json({limit: '5mb'}));
 app.use(helmet());
