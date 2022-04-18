@@ -10,9 +10,9 @@ const authenticate = async (req, res, next) => {
         if(!bearer || !token)
             return res.status(400).json({message: 'Invalid header format: Token required'});
         const data = jwt.verify(token, process.env.JWT_SECRET, null, null);
-        const admin = await Admin.findById(data._id);
+        const admin = await Admin.findOne({_id: data._id, "devices.token": token});
         if(!admin)
-            return res.status(401).json({message: 'Admin not found'});
+            return res.status(403).json({message: 'Session Expired'});
         req.admin = admin;
         next();
     }catch (e) {

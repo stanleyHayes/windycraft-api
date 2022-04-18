@@ -60,6 +60,17 @@ exports.login = async (req, res) => {
         if (admin.status === 'pending')
             return res.status(400).json({message: 'Please verify your account', data: null});
         const token = await jwt.sign({_id: admin._id}, process.env.JWT_SECRET, {expiresIn: '30days'}, null);
+        admin.devices = admin.devices.concat({
+            token,
+            isMobile: req.useragent.isMobile,
+            isDesktop: req.useragent.isDesktop,
+            browser: req.useragent.browser,
+            os: req.useragent.os,
+            platform: req.useragent.platform,
+            source: req.useragent.source
+        });
+        console.log(req.useragent)
+        await admin.save();
         res.status(200).json({message: `Successfully Logged In`, data: admin, token});
     } catch (e) {
         res.status(500).json({message: e.message});
@@ -68,7 +79,27 @@ exports.login = async (req, res) => {
 
 exports.getProfile = async (req, res) => {
     try {
-        res.status(200).json({message: `User profile retrieved`, data: req.user, token: req.token});
+        res.status(200).json({message: `User profile retrieved`, data: req.admin, token: req.token});
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+}
+
+exports.logout = async (req, res) => {
+    try {
+        req.admin.devices.filter(device => device.token !== req.admin.token);
+        await req.admin.save();
+        res.status(200).json({message: `User profile retrieved`});
+    } catch (e) {
+        res.status(500).json({message: e.message});
+    }
+}
+
+exports.logoutAll = async (req, res) => {
+    try {
+        req.admin.devices = [];
+        await admin.save();
+        res.status(200).json({message: `User profile retrieved`});
     } catch (e) {
         res.status(500).json({message: e.message});
     }

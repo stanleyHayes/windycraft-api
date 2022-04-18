@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const userAgent = require("express-useragent");
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
 const {mongoURI} = require("../src/config/keys");
@@ -39,6 +40,7 @@ mongoose.connect(mongoURI)
     console.log(`Error connecting to Mongo DB: ${error.message}`);
 });
 
+app.use(userAgent.express());
 app.use(express.json({limit: '5mb'}));
 app.use(helmet());
 app.use(cors());

@@ -10,8 +10,7 @@ const adminSchema = new Schema({
         trim: true
     },
     image: {
-        type: String,
-        required: true
+        type: String
     },
     username: {
         type: String,
@@ -76,6 +75,19 @@ const adminSchema = new Schema({
         type: String,
         enum: ['active', 'suspended', 'pending'],
         default: 'pending'
+    },
+    devices: {
+        type: [
+            {
+                token: {type: String, required: true},
+                isMobile: {type: Boolean, required: true},
+                isDesktop: {type: Boolean, required: true},
+                browser: {type: String, required: true},
+                os: {type: String, required: true},
+                platform: {type: String, required: true},
+                source: {type: String, required: true}
+            }
+        ]
     },
     permissions: {
         faqs: {
