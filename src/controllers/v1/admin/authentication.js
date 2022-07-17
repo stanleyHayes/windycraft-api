@@ -69,7 +69,6 @@ exports.login = async (req, res) => {
             platform: req.useragent.platform,
             source: req.useragent.source
         });
-        console.log(req.useragent)
         await admin.save();
         res.status(200).json({message: `Successfully Logged In`, data: admin, token});
     } catch (e) {
