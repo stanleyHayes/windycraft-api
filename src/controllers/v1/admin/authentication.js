@@ -36,7 +36,7 @@ exports.register = async (req, res) => {
 
         const token = await jwt.sign({_id: admin._id.toString()}, process.env.JWT_SECRET, {expiresIn: '30days'}, null);
         admin.authInfo.token = token;
-        const url = `https://supercraftgh.vercel.app/auth/verify/${token}`;
+        const url = `https://supercraftadmin.vercel.app/auth/verify/${token}`;
         const message = `Click on the link ${url} and verify your email with the otp ${otp}`;
         await admin.save();
         await sendEmail(email, 'VERIFY ACCOUNT WITH SUPERCRAFT GH', message);
@@ -130,7 +130,7 @@ exports.forgotPassword = async (req, res) => {
             return res.status(404).json({message: `No account associated with email ${email}`});
         const token = jwt.sign({_id: admin._id.toString()}, process.env.JWT_SECRET, null, null);
         admin.authInfo.token = token;
-        const url = `https://susuplus.vercel.app/auth/reset-password/${token}`;
+        const url = `https://supercraftadmin.vercel.app/auth/reset-password/${token}`;
         const message = `Reset your password using the link ${url}`;
         await admin.save();
         await sendEmail(email, 'RESET PASSWORD', message);
@@ -230,7 +230,7 @@ exports.resendOTP = async (req, res) => {
         user.authInfo.token = token;
         user.otp = otp;
         user.otpValidUntil = otpValidUntil;
-        const url = `https://susuplus.vercel.app/auth/verify/${token}`;
+        const url = `https://supercraftadmin.vercel.app/auth/verify/${token}`;
         const message = `Click on the link ${url} and verify your email with the otp ${otp}`;
         await user.save();
         await sendEmail(email, 'VERIFY ACCOUNT WITH SUSU PLUS', message);

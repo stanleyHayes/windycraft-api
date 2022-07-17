@@ -19,7 +19,7 @@ exports.createInvitation = async (req, res) => {
         )
         const invitation = await Invitation.create({email, inviter: req.admin._id, expiryDate, code: otp});
         const subject = `Admin Invitation`;
-        const link = `https://windycraft.vercel.app/invitations/${invitation._id}/${otp}`;
+        const link = `https://supercraftadmin.vercel.app/invitations/${invitation._id}/${otp}`;
         const message = `You have been invited by ${req.admin.name} of Super Craft GH sign up to be an admin. Follow the link ${link} to setup your account. Your otp is ${otp}`;
         await sendEmail(email, subject, message);
         invitation.code = otp;
